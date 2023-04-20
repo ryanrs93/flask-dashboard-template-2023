@@ -44,7 +44,17 @@ class AlphavantageService:
         else:
             return df
 
-
+    def fetch_unemployment(self):
+        """
+            Fetches unemployment data.
+            Returns the data, or an empty DataFrame if none is available.
+        """
+        request_url = f"https://www.alphavantage.co/query?function=UNEMPLOYMENT&apikey={self.api_key}&datatype=csv"
+        df = read_csv(request_url) #> pandas.DataFrame
+        if "timestamp" not in df.columns:
+            return DataFrame()
+        else:
+            return df
 
 
 if __name__ == "__main__":
@@ -65,3 +75,4 @@ if __name__ == "__main__":
         latest = stocks_df.iloc[0] # get the first row in the dataset
         print(latest["timestamp"])
         print(to_usd(latest["close"]))
+
